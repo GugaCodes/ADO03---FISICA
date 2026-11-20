@@ -208,12 +208,12 @@ if __name__ == "__main__":
     print("Momento conservado:", momento)
     print("Energia conservada:", energia)
 
-resultado = calcular_resultados(1, 10)
+    resultado = calcular_resultados(1, 10)
 
-print("Impulsos opostos:", verificar_impulsos(resultado))
+    print("Impulsos opostos:", verificar_impulsos(resultado))
 
-resultado = calcular_resultados(1, 10)
+    resultado = calcular_resultados(1, 10)
 
-verificacoes = verificar_resultados(resultado)
+    verificacoes = verificar_resultados(resultado)
 
-print(verificacoes)
+    print(verificacoes)
