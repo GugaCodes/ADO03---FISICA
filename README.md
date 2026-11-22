@@ -97,11 +97,4 @@ No caso de **massas iguais**, o bloco 1 começa a 4 m/s e transfere seu moviment
 | `formulas.py` | Define os casos e calcula velocidades, momento linear, energia cinética, impulsos e força média. |
 | `interface.py` | Exibe os controles, anima os blocos e atualiza os gráficos e o painel de resultados. |
 
-## Como executar no Windows
 
-Com o Python 3 instalado, abra o terminal do PyCharm na pasta onde estão `interface.py` e `formulas.py`. Instale o Matplotlib e inicie o simulador:
-
-```powershell
-python -m pip install matplotlib
-python interface.py
-```
