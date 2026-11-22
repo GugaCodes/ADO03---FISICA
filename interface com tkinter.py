@@ -1,4 +1,4 @@
-"""Interface interativa do ADO-3. Execute com python interface.py."""
+"""Interface interativa do ADO-3. Execute com python interface com matplotlib.py."""
 
 import customtkinter as ctk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
