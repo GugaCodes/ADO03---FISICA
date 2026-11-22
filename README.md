@@ -1,53 +1,107 @@
-#ADO-3 | Simulador de Colisões Elásticas
-Projeto da disciplina de Física: Práticas Extensivas, do curso de Ciência da Computação. O simulador representa uma colisão elástica unidimensional entre dois blocos e permite observar como o momento linear e a energia cinética totais se conservam durante o choque.
-Objetivo
-Simular o choque entre dois blocos em uma dimensão e investigar como a massa e a velocidade de cada bloco afetam o movimento após a colisão. A animação mostra quando os blocos se tocam e em que direção seguem. Os gráficos comparam o momento linear e a energia cinética totais antes e depois do choque.
-Modelo físico e fórmulas
-O simulador considera dois blocos em uma dimensão, sem força externa resultante na direção horizontal. A direita é o sentido positivo.
-Símbolo	Significado	Unidade
-m1, m2	Massas dos blocos	kg
-v1, v2	Velocidades antes do choque	m/s
-u1, u2	Velocidades depois do choque	m/s
-dt_ms	Duração do contato	ms
+# Simulador de Colisões Elásticas em Python
 
+Projeto desenvolvido para a **ADO-3 de Física: Práticas Extensivas**, do curso de Ciência da Computação. O grupo escolheu a **opção A**, que estuda colisões elásticas entre dois blocos que se movimentam em linha reta.
 
-Velocidades após a colisão
+## Objetivo
+
+Investigar como as massas e as velocidades iniciais influenciam o movimento dos blocos após uma colisão. O simulador permite observar quando um bloco para, muda de sentido ou continua avançando. Os gráficos mostram como o momento linear e a energia cinética totais se conservam, mesmo quando cada bloco muda de velocidade.
+
+## Como funciona
+
+A interface foi desenvolvida em Python com **Matplotlib**. O usuário escolhe um dos três casos predefinidos ou ajusta as massas, as velocidades e a duração do contato pelos controles deslizantes.
+
+A animação mostra o movimento antes e depois do choque. Os botões permitem pausar, continuar e reiniciar a simulação. Dois gráficos comparam o momento linear e a energia cinética totais antes e depois da colisão. O painel também apresenta as velocidades dos blocos, os impulsos e a força média durante o contato.
+
+## Casos simulados
+
+Nos três casos, o bloco 2 começa em repouso. Uma velocidade positiva indica movimento para a direita, e uma velocidade negativa indica movimento para a esquerda.
+
+| Caso | Massa do bloco 1 | Massa do bloco 2 | Velocidade inicial do bloco 1 | Resultado após o choque |
+| --- | ---: | ---: | ---: | --- |
+| Massas iguais | 1 kg | 1 kg | 4 m/s | O bloco 1 para e o bloco 2 segue a 4 m/s. |
+| Bloco 1 mais leve | 1 kg | 4 kg | 5 m/s | O bloco 1 volta a −3 m/s e o bloco 2 segue a 2 m/s. |
+| Bloco 1 mais pesado | 4 kg | 1 kg | 5 m/s | Os dois avançam. O bloco 1 segue a 3 m/s e o bloco 2 a 8 m/s. |
+
+## Fórmulas utilizadas
+
+Nas equações, `m1` e `m2` são as massas em quilogramas. As velocidades iniciais são `v1` e `v2`, e as velocidades após o choque são `u1` e `u2`, todas em metros por segundo.
+
+### 1. Velocidades após a colisão
+
+Em uma colisão elástica unidimensional, as velocidades finais são calculadas por:
+
+```text
 u1 = ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2)
 u2 = ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2)
-Momento linear e energia cinética
+```
+
+### 2. Momento linear
+
+O momento linear total é a soma dos momentos dos dois blocos. Como o sistema é isolado na direção horizontal, o total se conserva. A unidade é `kg·m/s`.
+
+```text
 p_antes  = m1 * v1 + m2 * v2
 p_depois = m1 * u1 + m2 * u2
+```
 
-K_antes  = (m1 * v1^2 + m2 * v2^2) / 2
-K_depois = (m1 * u1^2 + m2 * u2^2) / 2
-delta_K  = K_depois - K_antes
-O momento linear total é medido em kg·m/s, e a energia cinética total, em joules (J). Na colisão elástica, o momento total permanece igual e a variação da energia cinética total é zero. A energia pode ser transferida de um bloco para o outro.
-Impulso e força média
+### 3. Energia cinética
+
+A energia cinética é medida em joules (`J`). Na colisão elástica, um bloco pode transferir energia ao outro, e a variação da energia cinética total é zero.
+
+```text
+K_antes  = (m1 * v1² + m2 * v2²) / 2
+K_depois = (m1 * u1² + m2 * u2²) / 2
+
+ΔK = K_depois - K_antes
+```
+
+### 4. Impulso e força média
+
+O impulso é a variação do momento linear de cada bloco. Os impulsos têm o mesmo módulo e sentidos opostos. Para calcular o módulo da força média, o programa converte a duração do contato de milissegundos para segundos.
+
+```text
 J1 = m1 * (u1 - v1)
 J2 = m2 * (u2 - v2)
-dt = dt_ms / 1000
-F_media = |J1| / dt
-Os impulsos J1 e J2, medidos em N·s, têm o mesmo módulo e sentidos opostos. O painel mostra o módulo da força média em newtons (N) e usa a duração do contato em segundos.
-Instante da colisão e movimento
-O bloco 1 começa à esquerda do bloco 2, com 3 m entre as bordas. Se v1 > v2, a diferença de velocidades determina quando eles se tocam.
-d0 = 3 m
-tc = d0 / (v1 - v2)
 
-Antes do choque:  x(t) = x0 + v * t
-Depois do choque: x(t) = x(tc) + u * (t - tc)
-As equações de posição valem para cada bloco, usando sua posição inicial x0 e suas velocidades v e u. Quando v1 <= v2, os blocos mantêm as velocidades iniciais. O ajuste da duração do contato altera a força média, e a animação troca as velocidades no instante tc.
-Casos predefinidos
-Nos três casos, o bloco 2 começa em repouso. Velocidades negativas indicam movimento para a esquerda.
-Caso	Massa do bloco 1 (kg)	Massa do bloco 2 (kg)	Velocidade inicial do bloco 1 (m/s)	Velocidades finais (m/s)
-Massas iguais	1	1	4	Bloco 1: 0 · Bloco 2: 4
-Bloco 1 mais leve	1	4	5	Bloco 1: −3 · Bloco 2: 2
-Bloco 1 mais pesado	4	1	5	Bloco 1: 3 · Bloco 2: 8
+tempo_em_segundos = tempo_em_milissegundos / 1000
+forca_media = abs(J1) / tempo_em_segundos
+```
 
+O impulso é medido em `N·s` e a força média em `N`. Para o mesmo impulso, multiplicar a duração do contato por dez reduz a força média a um décimo.
 
-No caso de massas iguais, o bloco 1 para e o bloco 2 passa a se mover a 4 m/s. O momento total é 4 kg·m/s e a energia cinética total é 8 J, antes e depois do choque. Com um contato de 10 ms, os impulsos são −4 N·s e +4 N·s e a força média tem módulo de 400 N.
-Como usar o simulador
-- Selecione um dos três casos para carregar os valores iniciais.
-- Ajuste as massas, as velocidades ou a duração do contato pelos controles deslizantes.
-- Use os botões para pausar, continuar ou reiniciar a animação.
-- Compare o momento linear e a energia cinética totais nos gráficos de antes e depois do choque. O painel também mostra as velocidades, os impulsos e a força média.
-- Se o bloco 1 estiver com velocidade menor ou igual à do bloco 2, o simulador indica que não ocorre colisão.
+### 5. Instante da colisão e posição dos blocos
+
+O bloco 1 começa à esquerda do bloco 2, com uma distância de 3 m entre suas bordas. Quando `v1 > v2`, essa distância diminui até o contato. O tempo até a colisão é calculado por:
+
+```text
+tc = 3 / (v1 - v2)
+```
+
+Cada bloco se move com velocidade constante antes e depois do choque. Para cada um, `x0` é a posição inicial e `x(tc)` é a posição no instante do contato.
+
+```text
+Antes do choque:   x(t) = x0 + v * t
+Depois do choque:  x(t) = x(tc) + u * (t - tc)
+```
+
+Se `v1 <= v2`, o bloco 1 não alcança o bloco 2 e a interface informa que não ocorre colisão.
+
+## Como interpretar os gráficos
+
+No caso de **massas iguais**, o bloco 1 começa a 4 m/s e transfere seu movimento ao bloco 2. No gráfico de momento linear, as duas colunas marcam **4 kg·m/s**. No gráfico de energia cinética, ambas marcam **8 J**. As colunas de cada gráfico têm a mesma altura porque representam o total dos dois blocos.
+
+## Estrutura do projeto
+
+| Arquivo | Função |
+| --- | --- |
+| `formulas.py` | Define os casos e calcula velocidades, momento linear, energia cinética, impulsos e força média. |
+| `interface.py` | Exibe os controles, anima os blocos e atualiza os gráficos e o painel de resultados. |
+
+## Como executar no Windows
+
+Com o Python 3 instalado, abra o terminal do PyCharm na pasta onde estão `interface.py` e `formulas.py`. Instale o Matplotlib e inicie o simulador:
+
+```powershell
+python -m pip install matplotlib
+python interface.py
+```
